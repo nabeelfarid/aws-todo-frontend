@@ -1,0 +1,57 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn add yup gatsby-theme-material-ui gatsby-plugin-manifest gatsby-plugin-create-client-paths formik @material-ui/cor @material-ui/icons
+
+PATH: 
+  /Users/nabeelfarid/.asdf/shims:/usr/local/opt/asdf/bin:/Users/nabeelfarid/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/nabeelfarid/bin
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  14.15.5
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/@material-ui%2fcor: Not found
+      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66988:18)
+      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140662:22)
+      at Request.emit (events.js:315:20)
+      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141634:10)
+      at Request.emit (events.js:315:20)
+      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141556:12)
+      at Object.onceWrapper (events.js:421:28)
+      at IncomingMessage.emit (events.js:327:22)
+      at endReadableNT (internal/streams/readable.js:1327:12)
+      at processTicksAndRejections (internal/process/task_queues.js:80:21)
+
+npm manifest: 
+  {
+    "name": "aws-todo-frontend",
+    "version": "1.0.0",
+    "private": true,
+    "description": "aws-todo-frontend",
+    "author": "Nabeel",
+    "keywords": [
+      "gatsby"
+    ],
+    "scripts": {
+      "develop": "gatsby develop",
+      "start": "gatsby develop",
+      "build": "gatsby build",
+      "serve": "gatsby serve",
+      "clean": "gatsby clean"
+    },
+    "dependencies": {
+      "gatsby": "^3.6.2",
+      "react": "^17.0.1",
+      "react-dom": "^17.0.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
