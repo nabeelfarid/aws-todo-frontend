@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link as GatsbyLink } from "gatsby";
 import {
   useTheme,
@@ -11,8 +11,10 @@ import {
   Button,
   IconButton,
 } from "@material-ui/core";
-import { GitHub, PowerSettingsNew } from "@material-ui/icons";
+import { ExitToApp, GitHub, PowerSettingsNew } from "@material-ui/icons";
 import useSiteMetadata from "../hooks/useSiteMetaData";
+import { AmplifyIdentityContext } from "../utils/AmplifyIdentityContextProvider";
+import { AuthState } from "@aws-amplify/ui-components";
 
 interface HeaderProps {
   //   siteMetadata: {
@@ -23,34 +25,14 @@ interface HeaderProps {
   //   pathname?: string;
 }
 const Header: React.FC<HeaderProps> = () => {
+  const { user, authState, signout } = useContext(AmplifyIdentityContext);
+
   const siteMetadata = useSiteMetadata();
 
   const theme = useTheme();
   // console.log("path", props.pathname);
   return (
-    // <Box mx="auto" textAlign="center" my={4}>
-
-    //   <Grid container>
-    //     <Grid item xs={12}>
-    //       <Typography
-    //         variant="h2"
-    //         color="secondary"
-    //         component={GatsbyLink}
-    //         to="/"
-    //         style={{ textDecoration: "none" }}
-    //       >
-    //         {props.siteMetadata.title}
-    //       </Typography>
-    //     </Grid>
-    //     <Grid item xs={12}>
-    //       <Typography variant="h6" color="textSecondary">
-    //         {props.siteMetadata.subtitle}
-    //       </Typography>
-    //     </Grid>
-    //   </Grid>
-    // </Box>
-
-    <AppBar position="static" color="default">
+    <AppBar position="static" color="primary">
       <Toolbar>
         <Typography
           variant="h5"
@@ -62,13 +44,6 @@ const Header: React.FC<HeaderProps> = () => {
         </Typography>
         <Box flexGrow={1} />
 
-        {/* {props.pathname && (
-          <Tooltip title="Home">
-            <GatsbyIconButton aria-label="admin" color="inherit" to="/">
-              <Home />
-            </GatsbyIconButton>
-          </Tooltip>
-        )} */}
         <Tooltip title="Github Repo">
           <IconButton
             color="inherit"
@@ -81,17 +56,17 @@ const Header: React.FC<HeaderProps> = () => {
           </IconButton>
         </Tooltip>
 
-        {/* {user && (
-            <Tooltip title="Logout">
-              <IconButton
-                aria-label="logout"
-                onClick={async () => await identity.logout()}
-                color="secondary"
-              >
-                <PowerSettingsNew />
-              </IconButton>
-            </Tooltip>
-          )} */}
+        {authState === AuthState.SignedIn && user && (
+          <Tooltip title="Logout">
+            <IconButton
+              aria-label="logout"
+              onClick={async () => await signout()}
+              color="inherit"
+            >
+              <PowerSettingsNew />
+            </IconButton>
+          </Tooltip>
+        )}
       </Toolbar>
     </AppBar>
   );

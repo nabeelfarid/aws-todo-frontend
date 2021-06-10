@@ -1,74 +1,58 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
+import { Box } from "@material-ui/core";
+import { navigate } from "gatsby";
 import {
-  AppBar,
-  Box,
-  Container,
-  Tooltip,
-  Typography,
-  Toolbar,
-  Button,
-  IconButton,
-} from "@material-ui/core";
-import { GitHub, PowerSettingsNew } from "@material-ui/icons";
-import { Link, navigate } from "gatsby";
+  AmplifyAuthenticator,
+  AmplifySignIn,
+  AmplifySignUp,
+} from "@aws-amplify/ui-react";
+import { AuthState } from "@aws-amplify/ui-components";
 import Layout from "../components/layout";
 import Seo from "../components/seo";
-import useSiteMetadata from "../hooks/useSiteMetaData";
-// import { IdentityContext } from "../utils/IdentityContextProvider";
+import { AmplifyIdentityContext } from "../utils/AmplifyIdentityContextProvider";
 
 const IndexPage = () => {
-  const siteMetadata = useSiteMetadata();
-
-  // const [value, setValue] = useState(0);
-  // const { user, identity } = useContext(IdentityContext);
-  const user = null;
-  // const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-  //   setValue(newValue);
-  // };
+  const { user, authState } = useContext(AmplifyIdentityContext);
 
   useEffect(() => {
-    // if (user) {
-    //   console.log("navigating from Index to App ", user);
-    //   navigate("/app", { replace: true });
-    // }
-  }, [user]);
+    if (user && authState === AuthState.SignedIn) {
+      console.log("navigating from Index to App ", user);
+      navigate("/app", { replace: true });
+    }
+  }, [user, authState]);
 
   return (
     <Layout>
       <Seo title="Home" />
-      <Box mt={2} display="flex" flexDirection="column">
-        <Typography variant="h4" gutterBottom>
-          {user
-            ? `You are logged in ${user.user_metadata.full_name}`
-            : siteMetadata.slogan}
-        </Typography>
-        <Box mb={2}>
-          {user ? (
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={async () => {
-                await navigate("/app");
-              }}
-              fullWidth
-              size="large"
-            >
-              Proceed To Your Dashboard
-            </Button>
-          ) : (
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={() => {
-                // identity.open("login");
-              }}
-              fullWidth
-              size="large"
-            >
-              Login
-            </Button>
-          )}
-        </Box>
+      <Box my={2} display="flex" flexDirection="column">
+        <AmplifyAuthenticator
+          usernameAlias="email"
+          initialAuthState={AuthState.SignIn}
+        >
+          <AmplifySignUp
+            slot="sign-up"
+            usernameAlias="email"
+            formFields={[
+              {
+                type: "email",
+                inputProps: { required: true, autocomplete: "username" },
+              },
+              {
+                type: "password",
+                inputProps: {
+                  required: true,
+                  autocomplete: "new-password",
+                },
+              },
+            ]}
+          />
+          <AmplifySignIn
+            // headerText="My Custom Sign In Text"
+            // slot="sign-in"
+            usernameAlias="email"
+          ></AmplifySignIn>
+        </AmplifyAuthenticator>
+
         {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
       </Box>
     </Layout>
