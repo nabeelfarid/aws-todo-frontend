@@ -1,13 +1,13 @@
 const awsmobile = {
-  aws_appsync_region: "us-east-2", // (optional) - AWS AppSync region
+  aws_appsync_region: "us-east-2",
   aws_appsync_graphqlEndpoint:
-    "https://cs3a7p37dffy3csbh5bmhea4jq.appsync-api.us-east-2.amazonaws.com/graphql", // (optional) - AWS AppSync endpoint
-  aws_appsync_authenticationType: "AMAZON_COGNITO_USER_POOLS", // (optional) - Primary AWS AppSync authentication type
+    "https://fq7d73gi6ze57osfrzhwdwwvce.appsync-api.us-east-2.amazonaws.com/graphql",
+  aws_appsync_authenticationType: "AMAZON_COGNITO_USER_POOLS",
 
   Auth: {
     region: "us-east-2",
-    userPoolId: "us-east-2_DII6X8Ply",
-    userPoolWebClientId: "1p895kt0qtqa5rn2bk48l6r5q0",
+    userPoolId: "us-east-2_DK09ZXSt3",
+    userPoolWebClientId: "20844ed0dck4e059t94sglnh2e",
   },
 };
 

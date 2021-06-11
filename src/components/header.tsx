@@ -23,8 +23,10 @@ interface HeaderProps {
   //     repo?: string;
   //   };
   //   pathname?: string;
+  appBarTitle?: string;
+  appBarTitleUrl?: string;
 }
-const Header: React.FC<HeaderProps> = () => {
+const Header: React.FC<HeaderProps> = ({ appBarTitle, appBarTitleUrl }) => {
   const { user, authState, signout } = useContext(AmplifyIdentityContext);
 
   const siteMetadata = useSiteMetadata();
@@ -37,13 +39,27 @@ const Header: React.FC<HeaderProps> = () => {
         <Typography
           variant="h5"
           component={GatsbyLink}
-          to="/"
+          to={appBarTitleUrl ? appBarTitleUrl : "/"}
           style={{ color: "inherit", textDecoration: "none" }}
         >
-          {siteMetadata.title}
+          {appBarTitle ? appBarTitle : siteMetadata.title}
         </Typography>
         <Box flexGrow={1} />
 
+        {authState === AuthState.SignedIn && user && user.attributes && (
+          <>
+            <Typography>{user.attributes.name}</Typography>
+            <Tooltip title="Logout">
+              <IconButton
+                aria-label="logout"
+                onClick={async () => await signout()}
+                color="inherit"
+              >
+                <PowerSettingsNew />
+              </IconButton>
+            </Tooltip>
+          </>
+        )}
         <Tooltip title="Github Repo">
           <IconButton
             color="inherit"
@@ -55,18 +71,6 @@ const Header: React.FC<HeaderProps> = () => {
             <GitHub />
           </IconButton>
         </Tooltip>
-
-        {authState === AuthState.SignedIn && user && (
-          <Tooltip title="Logout">
-            <IconButton
-              aria-label="logout"
-              onClick={async () => await signout()}
-              color="inherit"
-            >
-              <PowerSettingsNew />
-            </IconButton>
-          </Tooltip>
-        )}
       </Toolbar>
     </AppBar>
   );

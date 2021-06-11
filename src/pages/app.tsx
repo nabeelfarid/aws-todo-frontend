@@ -28,7 +28,7 @@ const App = () => {
   }, [user, authState]);
 
   return (
-    <Layout>
+    <Layout appBarTitle="Dashboard" appBarTitleUrl="/app">
       <Seo title="Dashboard" />
       <Box my={2}>
         {authState !== AuthState.SignedIn ? (

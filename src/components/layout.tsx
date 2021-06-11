@@ -4,12 +4,21 @@ import { Box, Container, Divider, Link, Typography } from "@material-ui/core";
 import Header from "./header";
 import useSiteMetadata from "../hooks/useSiteMetaData";
 
-const Layout = ({ children }) => {
+interface LayoutProps {
+  appBarTitle?: string;
+  appBarTitleUrl?: string;
+}
+
+const Layout: React.FC<LayoutProps> = ({
+  appBarTitle,
+  appBarTitleUrl,
+  children,
+}) => {
   const siteMetadata = useSiteMetadata();
 
   return (
     <>
-      <Header />
+      <Header appBarTitle={appBarTitle} appBarTitleUrl={appBarTitleUrl} />
       <Container maxWidth="md">
         <Box mt={2}>
           <main>{children}</main>
@@ -63,10 +72,6 @@ const Layout = ({ children }) => {
       </Container>
     </>
   );
-};
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default Layout;
