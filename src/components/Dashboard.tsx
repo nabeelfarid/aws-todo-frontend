@@ -9,10 +9,12 @@ import {
   CircularProgress,
   Divider,
   Grid,
+  IconButton,
   LinearProgress,
   List,
   ListItem,
   ListItemIcon,
+  ListItemSecondaryAction,
   ListItemText,
 } from "@material-ui/core";
 import { Formik, Form, FormikHelpers } from "formik";
@@ -27,43 +29,10 @@ import * as queries from "../graphql/queries";
 import * as mutations from "../graphql/mutations";
 import { API, graphqlOperation } from "aws-amplify";
 import { Todo, GetTodosQuery, CreateTodoMutation } from "../API";
-
-// const ADD_TODO = gql`
-//   mutation AddTodo($title: String!) {
-//     addTodo(title: $title) {
-//       id
-//       title
-//       done
-//     }
-//   }
-// `;
-
-// const UPDATE_TODO_DONE = gql`
-//   mutation UpdateTodoDone($id: ID!) {
-//     updateTodoDone(id: $id) {
-//       id
-//       title
-//       done
-//     }
-//   }
-// `;
-
-// const GET_TODOS = gql`
-//   query GetTodos {
-//     todos {
-//       id
-//       title
-//       done
-//     }
-//   }
-// `;
+import { Delete } from "@material-ui/icons";
 
 const Dashboard = (props: RouteComponentProps) => {
   const { user } = useContext(AmplifyIdentityContext);
-  // const [addTodo, { loading: addTodoLoading }] = useMutation(ADD_TODO);
-  // const [updateTodoDone, { loading: updateTodoDoneLoading }] =
-  //   useMutation(UPDATE_TODO_DONE);
-  // const { loading, error, data, refetch } = useQuery(GET_TODOS);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState<GetTodosQuery>(null);
@@ -126,7 +95,6 @@ const Dashboard = (props: RouteComponentProps) => {
   };
 
   const handleToggle = async (todo: Todo) => {
-    // await updateTodoDone({ variables: { id: todo.id } });
     await API.graphql(
       graphqlOperation(mutations.updateTodoDoneStatus, {
         done: !todo.done,
@@ -139,11 +107,20 @@ const Dashboard = (props: RouteComponentProps) => {
     setUpdateTodoDoneLoading(false);
   };
 
+  const handleDelete = async (todo: Todo) => {
+    await API.graphql(
+      graphqlOperation(mutations.deleteTodo, {
+        id: todo.id,
+      })
+    );
+    data.getTodos = data.getTodos.filter((td) => td.id !== todo.id);
+    setData(data);
+    setUpdateTodoDoneLoading(false);
+  };
+
   return (
     <>
-      <div>Welcome to your Todo Dashboard : {user.username}</div>
-
-      <Box mt={2}>
+      <Box>
         <Formik
           initialValues={{ title: "", done: false }}
           validationSchema={Yup.object({
@@ -227,6 +204,18 @@ const Dashboard = (props: RouteComponentProps) => {
                           />
                         </ListItemIcon>
                         <ListItemText primary={todo.title} />
+                        <ListItemSecondaryAction>
+                          <IconButton
+                            aria-label="delete"
+                            onClick={() => {
+                              setUpdateTodoDoneLoading(true);
+                              setSelectedTodo(todo);
+                              handleDelete(todo);
+                            }}
+                          >
+                            <Delete />
+                          </IconButton>
+                        </ListItemSecondaryAction>
                       </ListItem>
                       {updateTodoDoneLoading &&
                       selectedTodo &&

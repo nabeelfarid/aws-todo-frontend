@@ -30,7 +30,7 @@ const App = () => {
   return (
     <Layout appBarTitle="Dashboard" appBarTitleUrl="/app">
       <Seo title="Dashboard" />
-      <Box my={2}>
+      <Box my={4}>
         {authState !== AuthState.SignedIn ? (
           <>
             <Loader showCircularProgress={false} />

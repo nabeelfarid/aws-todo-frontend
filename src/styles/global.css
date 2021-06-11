@@ -7,4 +7,5 @@
 amplify-authenticator {
   --container-height: 0;
   --background-color: aqua;
+  --margin-bottom: 0;
 }

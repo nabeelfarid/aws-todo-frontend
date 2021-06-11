@@ -25,7 +25,7 @@ const IndexPage = () => {
   return (
     <Layout>
       <Seo title="Home" />
-      <Box my={2} display="flex" flexDirection="column">
+      <Box my={4} display="flex" flexDirection="column">
         {user && authState === AuthState.SignedIn ? (
           <Loader showCircularProgress={false} />
         ) : (
