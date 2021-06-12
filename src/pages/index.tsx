@@ -60,7 +60,7 @@ const IndexPage = () => {
                 {
                   type: "name",
                   label: "Name *",
-                  placeholder: "Enter your name ",
+                  placeholder: "Enter your name",
                   inputProps: {
                     required: true,
                   },
