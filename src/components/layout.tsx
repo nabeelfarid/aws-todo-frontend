@@ -1,5 +1,4 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import { Box, Container, Divider, Link, Typography } from "@material-ui/core";
 import Header from "./header";
 import useSiteMetadata from "../hooks/useSiteMetaData";
