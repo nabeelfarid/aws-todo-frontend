@@ -59,7 +59,7 @@ const Layout: React.FC<LayoutProps> = ({
                   {", inspired by this "}
                   <Link
                     color="primary"
-                    href="https://egghead.io/playlists/building-a-serverless-jamstack-todo-app-with-netlify-gatsby-graphql-and-faunadb-53bb"
+                    href="https://aws.amazon.com/blogs/mobile/building-scalable-graphql-apis-on-aws-with-cdk-and-aws-appsync/"
                   >
                     post
                   </Link>
